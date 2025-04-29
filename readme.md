@@ -155,7 +155,7 @@ http://localhost:5000/api/v1/book/books/1
 
 ### Authentication
 
-***login*** `POST`
+***Login (Authentication)*** `POST`
 ```
 http://localhost:5000/api/v1/auth/login
 ```
@@ -167,7 +167,7 @@ http://localhost:5000/api/v1/auth/login
 }
 ```
 
-***Get Me** `GET`
+***Get Me (Authorization)*** `GET`
 
 ```
 http://localhost:5000/api/v1/auth/getme
