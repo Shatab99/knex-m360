@@ -1,4 +1,4 @@
-
+import bcrypt from "bcrypt";
 import knex from "../../../config/knex";
 import catchAsync from "../../global/catchAsync";
 import resSend from "../../global/resSend";
@@ -14,6 +14,9 @@ const createAuthor = catchAsync(async (req, res) => {
 
     if (author) throw new Error("Author already exists")
 
+    const hash = await bcrypt.hash(data.password, 10);
+    data.password = hash
+
     await knex("authors")
         .insert(data)
 
@@ -24,22 +27,22 @@ const getAllAuthors = catchAsync(async (req, res) => {
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
     const offset = (page - 1) * limit;
-  
+
     const authors = await knex("authors").select("*").limit(limit).offset(offset);
-  
+
     const [{ count }] = await knex("authors").count("* as count");
-  
+
     resSend(res, 200, "Authors fetched successfully", {
-      meta: {
-        page,
-        limit,
-        total: Number(count),
-        totalPages: Math.ceil(Number(count) / limit),
-      },
-      data: authors,
+        meta: {
+            page,
+            limit,
+            total: Number(count),
+            totalPages: Math.ceil(Number(count) / limit),
+        },
+        data: authors,
     });
-  });
-  
+});
+
 
 const getAuthorById = catchAsync(async (req, res) => {
     const { id } = req.params;
@@ -59,6 +62,9 @@ const updateAuthor = catchAsync(async (req, res) => {
 
 const deleteAuthor = catchAsync(async (req, res) => {
     const { id } = req.params;
+
+    console.log(id)
+    console.log(typeof (id))
     const author = await knex("authors").where({ id }).first();
     if (!author) throw new Error("Author not found")
     await knex("authors").where({ id }).delete();

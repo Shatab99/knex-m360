@@ -10,7 +10,7 @@ router.post("/authors", validate(AuthorValidation.create), AuthorController.crea
 router.get("/authors", AuthorController.getAllAuthors)
 router.get("/authors/:id", AuthorController.getAuthorById)
 router.put("/authors/:id", validate(AuthorValidation.update), AuthorController.updateAuthor)
-router.delete("/authors/:id",  AuthorController.updateAuthor)
+router.delete("/authors/:id",  AuthorController.deleteAuthor)
 
 
 export const AuthorRouter = router
