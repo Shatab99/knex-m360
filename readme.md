@@ -172,3 +172,11 @@ http://localhost:5000/api/v1/auth/login
 ```
 http://localhost:5000/api/v1/auth/getme
 ```
+
+**Please send token like this in headers**
+
+```
+{
+  "Authorization":`Bearer ${token}`
+}
+```
